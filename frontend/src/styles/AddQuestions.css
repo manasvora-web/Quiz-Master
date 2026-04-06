@@ -1,0 +1,407 @@
+/* =========================================
+   MAIN GRID
+========================================= */
+
+.addq-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+
+
+/* =========================================
+    QUIZ INFO BAR (TOP)
+========================================= */
+
+.quiz-info-bar {
+  grid-column: 1 / -1;
+
+  width: 100%;
+
+  background: linear-gradient(90deg, 00#ffe88a, #fde68a);
+  border: 1px solid #facc15;
+
+  padding: 14px 20px;
+
+  border-radius: 14px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #92400e;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+
+
+/* CODE BOX */
+
+.quiz-code-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #fde047;
+  padding: 6px 12px;
+
+  border-radius: 8px;
+}
+
+
+
+/* COPY BUTTON */
+
+.quiz-code-box button {
+  background: #facc15;
+  border: none;
+
+  padding: 5px 12px;
+
+  border-radius: 6px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  color: #78350f;
+  transition: 0.2s;
+}
+
+.quiz-code-box button:hover {
+  background: #eab308;
+}
+
+
+
+/* =========================================
+    CARD
+========================================= */
+
+.addq-card {
+  background: #ffffff;
+  padding: 25px;
+
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.addq-card h2 {
+  margin-bottom: 18px;
+  color: #111827;
+}
+
+
+
+/* =========================================
+    FORM
+========================================= */
+
+.addq-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.addq-form label {
+  font-weight: 600;
+  margin: 8px 0 5px;
+  color: #374151;
+}
+
+.addq-form input,
+.addq-form select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+}
+
+.addq-form input:focus,
+.addq-form select:focus {
+  border-color: #facc15;
+  box-shadow: 0 0 0 2px rgba(250,204,21,0.2);
+}
+
+
+
+/* =========================================
+    TYPE SWITCH (MCQ / TRUE FALSE)
+========================================= */
+
+.type-switch {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.type-switch button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.type-switch .active {
+  background: #fde047;
+  border-color: #facc15;
+}
+
+
+
+/* =========================================
+    NEGATIVE MARK BOX
+========================================= */
+
+.neg-box {
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.neg-box label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #92400e;
+}
+
+
+
+/* =========================================
+    BUTTONS
+========================================= */
+
+.addq-btn {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.addq-submit {
+  width: 100%;
+  margin-top: 15px;
+}
+
+
+
+/* =========================================
+    ALERTS
+========================================= */
+
+.addq-error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.addq-success {
+  background: #dcfce7;
+  color: #166534;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+
+
+/* =========================================
+    PREVIEW SECTION
+========================================= */
+
+.addq-empty {
+  color: #6b7280;
+  margin-top: 10px;
+}
+
+.addq-preview {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 10px;
+
+  border: 1px solid #e5e7eb;
+  margin-bottom: 12px;
+}
+
+.addq-q {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.addq-preview ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.addq-preview li {
+  padding: 6px 8px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.addq-preview .correct {
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 600;
+}
+
+
+
+/* MARK INFO */
+
+.mark-info {
+  font-size: 13px;
+  margin-top: 5px;
+
+  color: #374151;
+  background: #fefce8;
+
+  padding: 5px 8px;
+  border-radius: 6px;
+
+  border: 1px dashed #fde68a;
+}
+
+
+
+/* PREVIEW ACTIONS */
+
+.preview-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.preview-actions button {
+  padding: 4px 8px;
+  font-size: 13px;
+
+  border-radius: 5px;
+  border: 1px solid #d1d5db;
+
+  background: #fff;
+  cursor: pointer;
+}
+
+.preview-actions button:hover {
+  background: #f3f4f6;
+}
+
+.input-error {
+  border: 2px solid #dc2626 !important;
+  background: #fff5f5;
+}
+
+
+
+/* =========================================
+    IMAGE UPLOAD — FORM PREVIEW
+========================================= */
+
+.addq-image-preview {
+  margin: 8px 0 12px;
+  padding: 10px;
+  background: #fefce8;
+  border: 1px dashed #facc15;
+  border-radius: 8px;
+}
+
+.addq-image-preview img {
+  display: block;
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  object-fit: contain;
+}
+
+.addq-image-preview p {
+  margin: 0 0 4px;
+  font-size: 0.8rem;
+  color: #92400e;
+  font-weight: 600;
+}
+
+.remove-image-btn {
+  margin-top: 8px;
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.remove-image-btn:hover {
+  background: #fecaca;
+}
+
+
+
+/* =========================================
+    IMAGE — QUESTION PREVIEW (RIGHT PANEL)
+========================================= */
+
+.preview-image-box {
+  margin: 6px 0 8px;
+}
+
+.preview-image-box img {
+  display: block;
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  object-fit: contain;
+}
+
+
+
+/* =========================================
+    RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .addq-container {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-info-bar {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .quiz-code-box {
+    justify-content: center;
+  }
+}

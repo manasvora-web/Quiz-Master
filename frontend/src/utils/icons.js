@@ -1,0 +1,43 @@
+import {
+  FaPlusCircle,
+  FaTrash,
+  FaEdit,
+  FaCopy,
+  FaSignOutAlt,
+  FaArrowLeft,
+  FaArrowRight,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaClock,
+  FaUser,
+  FaChartBar,
+  FaPaperPlane,
+  FaHome,
+  FaList,
+  FaCog,
+  FaBook,
+  FaPlay,
+  FaExclamationTriangle
+} from "react-icons/fa";
+
+export {
+  FaPlusCircle,
+  FaTrash,
+  FaEdit,
+  FaCopy,
+  FaSignOutAlt,
+  FaArrowLeft,
+  FaArrowRight,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaClock,
+  FaUser,
+  FaChartBar,
+  FaPaperPlane,
+  FaHome,
+  FaList,
+  FaCog,
+  FaBook,
+  FaPlay,
+  FaExclamationTriangle
+};

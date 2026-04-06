@@ -1,0 +1,21 @@
+:root {
+  --heading: #1F2933;
+  --text: #1F2933;
+  --subtext: #6B7280;
+  --disabled: #9CA3AF;
+
+  --bg-main: #F5F7FA;
+  --bg-white: #FFFFFF;
+
+  --primary: #F9E547;
+  --primary-hover: #EAD63E;
+
+  --secondary: #1F2933;
+
+  --success: #22C55E;
+  --error: #EF4444;
+  --warning: #F59E0B;
+
+  --quiz-border: #D1D5DB;
+  --option-selected-bg: #FFF9CC;
+}

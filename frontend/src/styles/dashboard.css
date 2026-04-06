@@ -1,0 +1,116 @@
+/* MAIN CONTAINER */
+.dashboard-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+  background: #f9fafb;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.dashboard-header {
+  margin-bottom: 30px;
+}
+
+.dashboard-header h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #111827;
+}
+
+.dashboard-header p {
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* CARDS GRID */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+/* CARD */
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 25px 22px;
+
+  cursor: pointer;
+
+  border-left: 6px solid #fde047;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+  transition: all 0.25s ease;
+
+  text-align: left;
+}
+
+/* CARD HOVER */
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* ICON (EMOJI) */
+.dashboard-card span {
+  font-size: 30px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* CARD TITLE */
+.dashboard-card h3 {
+  margin: 12px 0 6px;
+  font-size: 18px;
+  color: #111827;
+}
+
+/* CARD TEXT */
+.dashboard-card p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* FOOTER */
+.dashboard-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* LOGOUT BUTTON (SMALL) */
+.dashboard-logout {
+  background: #fde047;
+  color: #1f2937;
+  border: none;
+
+  padding: 7px 16px;
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 3px 8px rgba(250, 204, 21, 0.3);
+
+  transition: all 0.2s ease;
+}
+
+.dashboard-logout:hover {
+  background: #facc15;
+  transform: translateY(-1px);
+}
+
+/* LOADING */
+.loading-text {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 18px;
+}

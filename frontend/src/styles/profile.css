@@ -1,0 +1,25 @@
+.profile-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 30px;
+}
+
+.profile-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.profile-card input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+}
+
+.profile-card button {
+  background: #fde047;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+}

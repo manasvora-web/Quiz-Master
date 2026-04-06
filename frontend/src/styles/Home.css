@@ -1,0 +1,105 @@
+/* Page Background */
+.home-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff9db, #f4f6fb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Main Card */
+.home-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Title */
+.home-title {
+  font-size: 34px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+/* Subtitle */
+.home-subtitle {
+  font-size: 15px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+/* Divider */
+.home-divider {
+  width: 60px;
+  height: 4px;
+  background: #fde047;
+  margin: 15px auto 30px;
+  border-radius: 10px;
+}
+
+/* Buttons Wrapper */
+.home-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Button Base */
+.home-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Primary Button */
+.home-btn.primary {
+  background: #fde047;
+  color: #1f2937;
+}
+
+.home-btn.primary:hover {
+  background: #facc15;
+  transform: translateY(-1px);
+}
+
+/* Secondary Button */
+.home-btn.secondary {
+  background: #1f2937;
+  color: #ffffff;
+}
+
+.home-btn.secondary:hover {
+  background: #111827;
+  transform: translateY(-1px);
+}
+
+/* Footer */
+.home-footer {
+  margin-top: 30px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

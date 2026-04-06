@@ -1,0 +1,112 @@
+/* Page Background */
+.join-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff9db, #f4f6fb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Main Card */
+.join-card {
+  width: 100%;
+  max-width: 440px;
+  background: white;
+  padding: 35px 32px;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+  animation: fadeIn 0.5s ease;
+}
+
+/* Title */
+.join-title {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  color: #1f2937;
+}
+
+.join-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  margin: 8px 0 25px;
+}
+
+/* Field */
+.join-field {
+  margin-bottom: 16px;
+}
+
+.join-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.join-field input {
+  margin-top: 6px;
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.join-field input:focus {
+  outline: none;
+  border-color: #facc15;
+}
+
+/* Button */
+.join-btn {
+  width: 100%;
+  background: #fde047;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.join-btn:hover {
+  background: #facc15;
+}
+
+/* Error Box */
+.join-error {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Footer */
+.join-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 20px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.input-error {
+  border: 2px solid #ef4444 !important;
+  background: #fff5f5;
+}
