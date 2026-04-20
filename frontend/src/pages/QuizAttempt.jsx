@@ -43,11 +43,32 @@ export default function QuizAttempt() {
 
 
 
-  /* ================= BLOCK COPY ================= */
+  /* ================= BLOCK COPY + ESC DETECTION ================= */
 
   useEffect(() => {
 
     const blockKeys = (e) => {
+
+      // ================= ESC KEY — CHEAT DETECTION =================
+      if (e.key === "Escape") {
+
+        e.preventDefault();
+
+        if (submittedRef.current) return;
+
+        showAlert(
+          "⚠️ Pressing Escape is not allowed!",
+          "error",
+          1500
+        );
+
+        // Fire auto submit as cheat
+        window.dispatchEvent(
+          new Event("AUTO_SUBMIT_QUIZ")
+        );
+
+        return;
+      }
 
       // CTRL+C
       if (e.ctrlKey && e.key.toLowerCase() === "c") {

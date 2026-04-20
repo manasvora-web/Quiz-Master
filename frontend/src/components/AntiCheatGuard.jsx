@@ -15,10 +15,9 @@ export default function AntiCheatGuard() {
 
       console.log("CHEAT:", reason);
 
+      // ✅ Fire AUTO_SUBMIT_QUIZ so QuizAttempt handles it
       window.dispatchEvent(
-        new CustomEvent("FORCE_FAIL_EXAM", {
-          detail: reason
-        })
+        new Event("AUTO_SUBMIT_QUIZ")
       );
     };
 

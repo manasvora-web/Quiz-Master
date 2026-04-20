@@ -33,10 +33,9 @@ export default function FullScreenGuard() {
 
       console.log("FULLSCREEN VIOLATION:", reason);
 
+      // ✅ Fire AUTO_SUBMIT_QUIZ so QuizAttempt handles it
       window.dispatchEvent(
-        new CustomEvent("FORCE_SUBMIT", {
-          detail: { reason }
-        })
+        new Event("AUTO_SUBMIT_QUIZ")
       );
     };
 
@@ -109,7 +108,7 @@ export default function FullScreenGuard() {
 
       if (document.fullscreenElement) {
         document.exitFullscreen().catch(() => {});
-      }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      }
     };
 
   }, []);

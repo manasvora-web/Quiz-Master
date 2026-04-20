@@ -69,6 +69,8 @@ exports.getAnalytics = async (req, res) => {
 /* ===============================
    GRAPH 1 — QUIZ ACTIVITY
    daily / monthly / yearly
+   FIX: GROUP BY and SELECT use same
+   DATE_FORMAT to avoid ONLY_FULL_GROUP_BY
 ================================ */
 exports.getQuizGraph = async (req, res) => {
 
@@ -78,27 +80,26 @@ exports.getQuizGraph = async (req, res) => {
     const { range = "monthly" } = req.query;
 
     let groupFormat = "";
-    let labelFormat = "";
 
     if (range === "daily") {
       groupFormat = "%Y-%m-%d";
-      labelFormat = "%d %b %Y";
     } else if (range === "yearly") {
       groupFormat = "%Y";
-      labelFormat = "%Y";
     } else {
       groupFormat = "%Y-%m";
-      labelFormat = "%b %Y";
     }
 
+    /* ── Use groupFormat in BOTH label and GROUP BY ── */
     const [rows] = await pool.query(`
       SELECT
-        DATE_FORMAT(qa.submitted_at, ?) AS label,
-        COUNT(*)                                                        AS total_attempts,
-        SUM(CASE WHEN qa.result_status = 'Pass' THEN 1 ELSE 0 END)     AS pass_count,
-        SUM(CASE WHEN qa.result_status = 'Fail' THEN 1 ELSE 0 END)     AS fail_count,
-        COUNT(DISTINCT qa.quiz_id)                                      AS quizzes_active,
-        COUNT(DISTINCT qa.student_id)                                   AS students_active
+        DATE_FORMAT(qa.submitted_at, ?)         AS label,
+        COUNT(*)                                AS total_attempts,
+        SUM(CASE WHEN qa.result_status = 'Pass'
+            THEN 1 ELSE 0 END)                  AS pass_count,
+        SUM(CASE WHEN qa.result_status = 'Fail'
+            THEN 1 ELSE 0 END)                  AS fail_count,
+        COUNT(DISTINCT qa.quiz_id)              AS quizzes_active,
+        COUNT(DISTINCT qa.student_id)           AS students_active
       FROM quiz_attempts qa
       JOIN quizzes q ON qa.quiz_id = q.id
       WHERE q.organizer_id = ?
@@ -106,9 +107,33 @@ exports.getQuizGraph = async (req, res) => {
       GROUP BY DATE_FORMAT(qa.submitted_at, ?)
       ORDER BY DATE_FORMAT(qa.submitted_at, ?) ASC
       LIMIT 30
-    `, [labelFormat, organizerId, groupFormat, groupFormat]);
+    `, [groupFormat, organizerId, groupFormat, groupFormat]);
 
-    res.json({ range, data: rows });
+
+    /* ── Format label nicely in JS instead of MySQL ── */
+    const formatted = rows.map(row => {
+
+      let label = row.label;
+
+      if (range === "monthly") {
+        // "2026-02" → "Feb 2026"
+        const [y, m] = row.label.split("-");
+        const months = ["Jan","Feb","Mar","Apr","May","Jun",
+                        "Jul","Aug","Sep","Oct","Nov","Dec"];
+        label = `${months[parseInt(m) - 1]} ${y}`;
+
+      } else if (range === "daily") {
+        // "2026-02-23" → "23 Feb 2026"
+        const [y, m, d] = row.label.split("-");
+        const months = ["Jan","Feb","Mar","Apr","May","Jun",
+                        "Jul","Aug","Sep","Oct","Nov","Dec"];
+        label = `${d} ${months[parseInt(m) - 1]} ${y}`;
+      }
+
+      return { ...row, label };
+    });
+
+    res.json({ range, data: formatted });
 
   } catch (err) {
     console.error("QUIZ GRAPH ERROR:", err);
@@ -181,7 +206,6 @@ exports.getStudentGraph = async (req, res) => {
 
     /* ── GET all attempts for these students in ONE query ── */
     const studentIds = studentRows.map(s => s.id);
-
     const placeholders = studentIds.map(() => "?").join(",");
 
     const [attemptRows] = await pool.query(`
