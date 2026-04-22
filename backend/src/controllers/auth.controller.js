@@ -9,11 +9,16 @@ exports.organizerLogin = async (req, res) => {
 
   const { email, password } = req.body;
 
+  console.log("LOGIN ATTEMPT:", email);
+
   if (!email || !password) {
+    console.log("LOGIN FAILED: Missing email or password");
     return res.status(400).json({ message: "Email and password required" });
   }
 
   try {
+
+    console.log("DB: Looking up organizer...");
 
     // Find organizer
     const [rows] = await db.query(
@@ -21,16 +26,24 @@ exports.organizerLogin = async (req, res) => {
       [email]
     );
 
+    console.log("DB: Found rows:", rows.length);
+
     if (rows.length === 0) {
+      console.log("LOGIN FAILED: No organizer found with email:", email);
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const organizer = rows[0];
 
+    console.log("DB: Comparing password...");
+
     // Compare password
     const isMatch = await bcrypt.compare(password, organizer.password);
 
+    console.log("PASSWORD MATCH:", isMatch);
+
     if (!isMatch) {
+      console.log("LOGIN FAILED: Password mismatch");
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
@@ -44,11 +57,13 @@ exports.organizerLogin = async (req, res) => {
       { expiresIn: "1d" }
     );
 
+    console.log("LOGIN SUCCESS:", email);
+
     res.json({ token });
 
   } catch (err) {
 
-    console.error("Login error:", err);
+    console.error("LOGIN ERROR:", err);
 
     res.status(500).json({ message: "Login failed" });
   }
@@ -57,7 +72,7 @@ exports.organizerLogin = async (req, res) => {
 
 
 /* ===============================
-   GET PROFILE (NEW ✅)
+   GET PROFILE
 ================================ */
 exports.getProfile = async (req, res) => {
 
@@ -85,7 +100,7 @@ exports.getProfile = async (req, res) => {
 
 
 /* ===============================
-   UPDATE PROFILE (NEW ✅)
+   UPDATE PROFILE
 ================================ */
 exports.updateProfile = async (req, res) => {
 
