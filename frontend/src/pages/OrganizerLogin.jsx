@@ -23,9 +23,11 @@ export default function OrganizerLogin() {
   });
 
   const [loading, setLoading] = useState(false);
-
   const [errors, setErrors] = useState({});
 
+  /* ================= CONFIRMATION POPUP ================= */
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [confirmedUser, setConfirmedUser] = useState("");
 
 
   /* ================= CHANGE ================= */
@@ -39,14 +41,11 @@ export default function OrganizerLogin() {
       [name]: value
     }));
 
-
-    // Remove error while typing
     setErrors(prev => ({
       ...prev,
       [name]: false
     }));
   };
-
 
 
   /* ================= VALIDATION ================= */
@@ -56,26 +55,19 @@ export default function OrganizerLogin() {
     let temp = {};
     let ok = true;
 
-
     if (!form.email.trim()) {
-
       temp.email = true;
       ok = false;
     }
 
-
     if (!form.password.trim()) {
-
       temp.password = true;
       ok = false;
     }
 
-
     setErrors(temp);
-
     return ok;
   };
-
 
 
   /* ================= SUBMIT ================= */
@@ -84,39 +76,26 @@ export default function OrganizerLogin() {
 
     e.preventDefault();
 
-
     if (!validate()) {
-
       showAlert("Please enter email and password", "warning");
       return;
     }
-
 
     setLoading(true);
 
     try {
 
       const res = await api.post("/auth/organizer/login", {
-
         email: form.email.trim(),
-
         password: form.password
       });
-
 
       /* SAVE TOKEN */
       login(res.data.token);
 
-
-      showAlert("Login successful!", "success", 1500);
-
-
-      setTimeout(() => {
-
-        navigate("/organizer/dashboard");
-
-      }, 1200);
-
+      /* SHOW CONFIRMATION POPUP */
+      setConfirmedUser(form.email.trim());
+      setShowConfirm(true);
 
     } catch (err) {
 
@@ -126,13 +105,22 @@ export default function OrganizerLogin() {
 
       showAlert(msg, "error");
 
-
     } finally {
-
       setLoading(false);
     }
   };
 
+
+  /* ================= GO TO DASHBOARD ================= */
+
+  const goToDashboard = () => {
+    setShowConfirm(false);
+    navigate("/organizer/dashboard");
+  };
+
+  const goBackToLogin = () => {
+    setShowConfirm(false);
+  };
 
 
   /* ================= UI ================= */
@@ -150,64 +138,84 @@ export default function OrganizerLogin() {
           Manage quizzes and student results
         </p>
 
-
-
-        <form
-          onSubmit={handleSubmit}
-          noValidate
-        >
-
+        <form onSubmit={handleSubmit} noValidate>
 
           {/* EMAIL */}
           <div className="login-field">
-
             <label>Email</label>
-
             <input
               type="email"
               name="email"
               placeholder="admin@quiz.com"
               value={form.email}
               onChange={handleChange}
+              autoComplete="email"
               className={errors.email ? "input-error" : ""}
             />
-
           </div>
-
-
 
           {/* PASSWORD */}
           <div className="login-field">
-
             <label>Password</label>
-
             <input
               type="password"
               name="password"
               placeholder="Enter password"
               value={form.password}
               onChange={handleChange}
+              autoComplete="current-password"
               className={errors.password ? "input-error" : ""}
             />
-
           </div>
-
-
 
           {/* BUTTON */}
           <button
             className="login-btn"
             disabled={loading}
           >
-
             {loading ? "Logging in..." : "Login"}
-
           </button>
-
 
         </form>
 
       </div>
+
+
+      {/* ================= CONFIRMATION POPUP ================= */}
+      {showConfirm && (
+        <div className="confirm-overlay">
+          <div className="confirm-box">
+
+            <div className="confirm-icon">✅</div>
+
+            <h3>Login Successful!</h3>
+
+            <p>
+              Welcome back!<br />
+              <b>{confirmedUser}</b>
+            </p>
+
+            <div className="confirm-actions">
+
+              <button
+                className="cancel-btn"
+                onClick={goBackToLogin}
+              >
+                ← Back
+              </button>
+
+              <button
+                className="yes-btn"
+                onClick={goToDashboard}
+              >
+                Go to Dashboard →
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
