@@ -20,10 +20,10 @@ exports.organizerLogin = async (req, res) => {
 
     console.log("DB: Looking up organizer...");
 
-    // Find organizer
+    // Find organizer (case-insensitive lookup)
     const [rows] = await db.query(
-      "SELECT * FROM organizers WHERE email = ? LIMIT 1",
-      [email]
+      "SELECT * FROM organizers WHERE LOWER(email) = LOWER(?) LIMIT 1",
+      [email.trim()]
     );
 
     console.log("DB: Found rows:", rows.length);
