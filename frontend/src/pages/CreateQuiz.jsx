@@ -53,7 +53,7 @@ export default function CreateQuiz() {
 
     /* TIME LIMIT — no negative */
     if (name === "time_limit") {
-      if (Number(value) < 0) value = "";
+      if (value.includes("-") || Number(value) < 0) return;
     }
 
     setForm(prev => ({
@@ -217,8 +217,8 @@ export default function CreateQuiz() {
             <input
               type="number"
               name="time_limit"
-              placeholder="Min 2 minutes"
-              min="2"
+              placeholder="e.g. 30"
+              min="0"
               value={form.time_limit}
               onChange={handleChange}
               className={errors.time_limit ? "input-error" : ""}

@@ -45,7 +45,7 @@
   color: #374151;
 }
 
-.create-field input,
+.create-field input:not([type="checkbox"]),
 .create-field textarea {
   margin-top: 6px;
   width: 100%;
@@ -61,7 +61,7 @@
   height: 80px;
 }
 
-.create-field input:focus,
+.create-field input:not([type="checkbox"]):focus,
 .create-field textarea:focus {
   outline: none;
   border-color: #facc15;
@@ -169,7 +169,7 @@
   background: #e5e7eb;
 }
 
-/* ================= CHECKBOX LABEL ================= */
+/* ================= CHECKBOX LABEL & TOGGLE ================= */
 .checkbox-label {
   display: flex;
   align-items: center;
@@ -186,6 +186,26 @@
   accent-color: #facc15;
   flex-shrink: 0;
   margin: 0;
+}
+
+/* RESULT TOGGLE CARD */
+.result-toggle {
+  background: #f9fafb;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+}
+
+.result-toggle .checkbox-label {
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+.result-toggle small {
+  margin-top: 0;
+  margin-left: 28px;
 }
 
 /* ================= CONFIRM POPUP ================= */
