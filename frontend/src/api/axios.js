@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://quizmaster-backend-n6f3.onrender.com" ,
+  baseURL: "https://quizmaster-backend-n6f3.onrender.com/api",
   headers: {
     "Content-Type": "application/json"
   }
