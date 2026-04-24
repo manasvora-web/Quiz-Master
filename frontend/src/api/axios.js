@@ -37,7 +37,7 @@ api.interceptors.response.use(
 
       localStorage.removeItem("quiz_token");
 
-      window.location.href = "/login";
+      window.location.href = "/organizer/login";
     }
 
     return Promise.reject(error);
