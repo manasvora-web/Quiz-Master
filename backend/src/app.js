@@ -38,4 +38,14 @@ app.get("/", (req, res) => {
   res.json({ message: "Secure Quiz API running" });
 });
 
+app.get("/health", async (req, res) => {
+  try {
+    const db = require("./config/db");
+    await db.query("SELECT 1");
+    res.json({ status: "ok", database: "connected" });
+  } catch (err) {
+    res.status(500).json({ status: "error", message: err.message });
+  }
+});
+
 module.exports = app;
