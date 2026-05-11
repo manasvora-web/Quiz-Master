@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import api from "../api/axios";
@@ -56,6 +56,8 @@ export default function AddQuestions() {
 
   const [questions, setQuestions] = useState([]);
   const [errors, setErrors] = useState({});
+
+  const fileInputRef = useRef(null);
 
 
 
@@ -198,10 +200,14 @@ export default function AddQuestions() {
 
 
 
-  const handleRemoveImage = () => {
+  const handleRemoveImage = (e) => {
+    if (e) e.stopPropagation();
     setImageFile(null);
     setImagePreview(null);
     setExistingImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
 
@@ -540,51 +546,45 @@ export default function AddQuestions() {
           {/* ================= IMAGE UPLOAD ================= */}
           <label>
             <FaImage /> Question Image{" "}
-            <span style={{ fontWeight: 400, fontSize: "0.85rem", color: "#888" }}>
-              (optional — JPG/PNG, max 6MB)
+            <span style={{ fontWeight: 400, fontSize: "0.85rem", color: "var(--subtext)" }}>
+              (optional — JPG/PNG)
             </span>
           </label>
 
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/gif,image/webp"
-            onChange={handleImageChange}
-            style={{ marginBottom: "8px" }}
-          />
+          <div 
+            className={`image-upload-area ${imagePreview || existingImage ? 'has-image' : ''}`}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="image/jpeg,image/png,image/gif,image/webp"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+            />
 
-          {/* NEW image preview */}
-          {imagePreview && (
-            <div className="addq-image-preview">
-              <img src={imagePreview} alt="Preview" />
-              <button
-                type="button"
-                className="remove-image-btn"
-                onClick={handleRemoveImage}
-              >
-                ✕ Remove Image
-              </button>
-            </div>
-          )}
-
-          {/* EXISTING image (edit mode, no new file chosen) */}
-          {!imagePreview && existingImage && (
-            <div className="addq-image-preview">
-              <p style={{ fontSize: "0.8rem", color: "#888", marginBottom: "4px" }}>
-                Current image:
-              </p>
-              <img
-                src={`${BASE_URL}${existingImage}`}
-                alt="Existing"
-              />
-              <button
-                type="button"
-                className="remove-image-btn"
-                onClick={handleRemoveImage}
-              >
-                ✕ Remove Image
-              </button>
-            </div>
-          )}
+            {!imagePreview && !existingImage ? (
+              <div className="upload-placeholder">
+                <FaImage className="upload-icon" />
+                <span>Click to upload image</span>
+              </div>
+            ) : (
+              <div className="preview-container">
+                <img 
+                  src={imagePreview || `${BASE_URL}${existingImage}`} 
+                  alt="Question" 
+                />
+                <button
+                  type="button"
+                  className="remove-image-overlay"
+                  onClick={handleRemoveImage}
+                  title="Remove Image"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+          </div>
 
 
           {/* OPTION COUNT */}

@@ -1,21 +1,38 @@
 :root {
-  --heading: #1F2933;
-  --text: #1F2933;
-  --subtext: #6B7280;
-  --disabled: #9CA3AF;
+  /* Brand Colors */
+  --primary: #fbbf24; /* Amber 400 */
+  --primary-hover: #f59e0b; /* Amber 500 */
+  --primary-soft: #fffbeb; /* Amber 50 */
+  
+  --secondary: #0f172a; /* Slate 900 */
+  --secondary-hover: #1e293b; /* Slate 800 */
 
-  --bg-main: #F5F7FA;
-  --bg-white: #FFFFFF;
+  /* Text Colors */
+  --heading: #0f172a; /* Slate 900 */
+  --text: #334155; /* Slate 700 */
+  --subtext: #64748b; /* Slate 500 */
+  --disabled: #cbd5e1; /* Slate 300 */
 
-  --primary: #F9E547;
-  --primary-hover: #EAD63E;
+  /* Backgrounds */
+  --bg-main: #f8fafc; /* Slate 50 */
+  --bg-white: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.8);
 
-  --secondary: #1F2933;
+  /* Status Colors */
+  --success: #10b981; /* Emerald 500 */
+  --error: #ef4444; /* Red 500 */
+  --warning: #f59e0b; /* Amber 500 */
+  --info: #3b82f6; /* Blue 500 */
 
-  --success: #22C55E;
-  --error: #EF4444;
-  --warning: #F59E0B;
+  /* Borders & Shadows */
+  --border: #e2e8f0; /* Slate 200 */
+  --border-focus: #6366f1; /* Indigo 500 */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
-  --quiz-border: #D1D5DB;
-  --option-selected-bg: #FFF9CC;
+  /* Quiz Specific */
+  --option-selected-bg: #fffbeb;
+  --option-selected-border: #fbbf24;
 }
