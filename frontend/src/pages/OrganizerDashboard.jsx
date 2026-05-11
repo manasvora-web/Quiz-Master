@@ -80,7 +80,7 @@ export default function OrganizerDashboard() {
 
     showAlert("Logged out successfully", "success");
 
-    navigate("/organizer/login");
+    navigate("/organizer/login", { replace: true });
   };
 
 

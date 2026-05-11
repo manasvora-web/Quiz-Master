@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import api from "../api/axios";
@@ -13,6 +13,14 @@ export default function OrganizerLogin() {
   const { showAlert } = useAlert();
 
   const navigate = useNavigate();
+  const { token } = useAuth();
+
+  /* ================= AUTO REDIRECT ================= */
+  useEffect(() => {
+    if (token) {
+      navigate("/organizer/dashboard", { replace: true });
+    }
+  }, [token, navigate]);
 
 
   /* ================= STATE ================= */
@@ -115,7 +123,7 @@ export default function OrganizerLogin() {
 
   const goToDashboard = () => {
     setShowConfirm(false);
-    navigate("/organizer/dashboard");
+    navigate("/organizer/dashboard", { replace: true });
   };
 
   const goBackToLogin = () => {
