@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 
 import api from "../api/axios";
@@ -284,7 +285,7 @@ export default function CreateQuiz() {
 
 
       {/* ================= CONFIRMATION POPUP ================= */}
-      {showConfirm && pendingData && (
+      {showConfirm && pendingData && createPortal(
         <div className="confirm-overlay">
           <div className="confirm-box">
 
@@ -342,7 +343,8 @@ export default function CreateQuiz() {
             </div>
 
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
     </div>
