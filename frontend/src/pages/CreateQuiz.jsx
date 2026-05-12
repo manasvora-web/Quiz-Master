@@ -56,6 +56,11 @@ export default function CreateQuiz() {
       if (value.includes("-") || Number(value) < 0) return;
     }
 
+    /* DESCRIPTION — no limit */
+    if (name === "description") {
+      // no return here
+    }
+
     setForm(prev => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value
@@ -263,8 +268,8 @@ export default function CreateQuiz() {
             </label>
             <small>
               {form.show_result
-                ? "Students will see result after quiz ✅"
-                : "Students will see Good Luck only ⚠️"}
+                ? "Students will see result after quiz"
+                : "Students will see Good Luck only"}
             </small>
           </div>
 
@@ -286,10 +291,35 @@ export default function CreateQuiz() {
             <h3>Confirm Quiz Creation</h3>
 
             <div className="confirm-details">
-              <p><b>Title:</b> {pendingData.title}</p>
-              <p><b>Time:</b> {pendingData.time_limit} minutes</p>
-              <p><b>Code:</b> {pendingData.custom_code}</p>
-              <p><b>Show Result:</b> {pendingData.show_result ? "Yes ✅" : "No ⚠️"}</p>
+              <div className="confirm-item">
+                <label>Title</label>
+                <div>{pendingData.title}</div>
+              </div>
+              
+              {pendingData.description && (
+                <div className="confirm-item">
+                  <label>Description</label>
+                  <div className="confirm-desc">{pendingData.description}</div>
+                </div>
+              )}
+
+              <div className="confirm-grid">
+                <div className="confirm-item">
+                  <label>Time Limit</label>
+                  <div>{pendingData.time_limit} minutes</div>
+                </div>
+                <div className="confirm-item">
+                  <label>Quiz Code</label>
+                  <div className="confirm-code">{pendingData.custom_code}</div>
+                </div>
+              </div>
+
+              <div className="confirm-item">
+                <label>Result Display</label>
+                <div>
+                  {pendingData.show_result ? "Visible to students" : "Hidden from students"}
+                </div>
+              </div>
             </div>
 
             <p className="confirm-note">
@@ -301,13 +331,13 @@ export default function CreateQuiz() {
                 className="cancel-btn"
                 onClick={() => setShowConfirm(false)}
               >
-                ← Cancel
+                Cancel
               </button>
               <button
                 className="yes-btn"
                 onClick={confirmCreate}
               >
-                ✅ Yes, Create
+                Yes, Create
               </button>
             </div>
 
