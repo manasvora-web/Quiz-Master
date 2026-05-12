@@ -186,6 +186,87 @@ button:disabled {
   border: 1px solid #d1fae5;
 }
 
+/* ================= GLOBAL MODAL ================= */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(12px);
+  display: grid;
+  place-items: center;
+  z-index: 5000;
+  padding: 20px;
+}
+
+.confirm-box {
+  box-sizing: border-box;
+  background: var(--bg-white);
+  padding: 40px;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: scaleIn 0.3s ease-out;
+  border: 1px solid var(--border);
+}
+
+.confirm-box h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.modal-cancel {
+  flex: 1;
+  background: white;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  transition: all 0.2s;
+}
+
+.modal-cancel:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.modal-confirm {
+  flex: 1;
+  background: var(--primary);
+  color: var(--secondary);
+  font-weight: 700;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.modal-confirm:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 /* ================= UTILITIES ================= */
 
 .flex-between {
@@ -197,4 +278,3 @@ button:disabled {
 .text-center { text-align: center; }
 
 .mt-20 { margin-top: 20px; }
-

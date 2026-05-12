@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 
 import api from "../api/axios";
@@ -13,6 +14,8 @@ export default function ManageQuizzes() {
 
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [quizToDelete, setQuizToDelete] = useState(null);
 
 
 
@@ -54,9 +57,31 @@ export default function ManageQuizzes() {
 
   }, [showAlert]);
 
-
-
-  /* ================= UI ================= */
+  /* ================= DELETE QUIZ ================= */
+ 
+   const handleDeleteClick = (quiz) => {
+     setQuizToDelete(quiz);
+     setShowDeleteConfirm(true);
+   };
+ 
+   const confirmDelete = async () => {
+     if (!quizToDelete) return;
+ 
+     try {
+       await api.delete(`/quiz/${quizToDelete.id}`);
+       setQuizzes(quizzes.filter(q => q.id !== quizToDelete.id));
+       showAlert("Quiz deleted successfully", "success");
+     } catch (err) {
+       showAlert("Failed to delete quiz", "error");
+     } finally {
+       setShowDeleteConfirm(false);
+       setQuizToDelete(null);
+     }
+   };
+ 
+ 
+ 
+   /* ================= UI ================= */
 
   return (
     <div className="manage-container">
@@ -95,15 +120,25 @@ export default function ManageQuizzes() {
                 Code: <b>{q.quiz_code}</b>
               </p>
 
-              <button
-                onClick={() =>
-                  navigate(
-                    `/organizer/add-questions/${q.id}`
-                  )
-                }
-              >
-                Edit Questions
-              </button>
+              <div className="card-actions">
+                <button
+                  className="edit-btn"
+                  onClick={() =>
+                    navigate(
+                      `/organizer/add-questions/${q.id}`
+                    )
+                  }
+                >
+                  Edit Questions
+                </button>
+ 
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDeleteClick(q)}
+                >
+                  Delete
+                </button>
+              </div>
 
             </div>
           ))}
@@ -111,6 +146,39 @@ export default function ManageQuizzes() {
         </div>
       )}
 
-    </div>
+      {/* ================= DELETE CONFIRMATION ================= */}
+       {showDeleteConfirm && createPortal(
+         <div className="confirm-overlay">
+           <div className="confirm-box">
+             
+             <h3 style={{ color: "#ef4444" }}>Delete Quiz?</h3>
+             
+             <p className="text-center" style={{ color: "#64748b", margin: "10px 0 20px" }}>
+               Are you sure you want to delete <b>{quizToDelete?.title}</b>?<br/>
+               This action cannot be undone and will remove all questions and results.
+             </p>
+ 
+             <div className="confirm-actions">
+               <button 
+                 className="modal-cancel" 
+                 onClick={() => setShowDeleteConfirm(false)}
+               >
+                 Keep Quiz
+               </button>
+               <button 
+                 className="modal-confirm" 
+                 style={{ background: "#ef4444", color: "white" }}
+                 onClick={confirmDelete}
+               >
+                 Delete Forever
+               </button>
+             </div>
+ 
+           </div>
+         </div>,
+         document.body
+       )}
+ 
+     </div>
   );
 }

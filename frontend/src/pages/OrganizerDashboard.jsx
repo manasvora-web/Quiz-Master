@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 
 import api from "../api/axios";
@@ -21,11 +22,10 @@ export default function OrganizerDashboard() {
 
   const { logout } = useAuth();
   const navigate = useNavigate();
-
-  // ✅ REMOVE showConfirm
   const { showAlert } = useAlert();
 
   const [loading, setLoading] = useState(true);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
 
 
@@ -74,13 +74,14 @@ export default function OrganizerDashboard() {
   /* ================= LOGOUT ================= */
 
   const handleLogout = () => {
+    setShowLogoutConfirm(true);
+  };
 
-    // ✅ Direct logout (no confirm popup)
+  const confirmLogout = () => {
+    setShowLogoutConfirm(false);
     logout();
-
     showAlert("Logged out successfully", "success");
-
-    navigate("/organizer/login", { replace: true });
+    navigate("/", { replace: true });
   };
 
 
@@ -193,7 +194,40 @@ export default function OrganizerDashboard() {
         </button>
 
       </div>
-
-    </div>
+ 
+ 
+       {/* ================= LOGOUT CONFIRMATION ================= */}
+       {showLogoutConfirm && createPortal(
+         <div className="confirm-overlay">
+           <div className="confirm-box">
+             
+             <h3>Confirm Logout</h3>
+             
+             <p className="text-center" style={{ color: "#64748b", margin: "10px 0 20px" }}>
+               Are you sure you want to log out of your admin dashboard?
+             </p>
+ 
+             <div className="confirm-actions">
+               <button 
+                 className="modal-cancel" 
+                 onClick={() => setShowLogoutConfirm(false)}
+               >
+                 Stay Here
+               </button>
+               <button 
+                 className="modal-confirm" 
+                 style={{ background: "#ef4444", color: "white" }}
+                 onClick={confirmLogout}
+               >
+                 Logout
+               </button>
+             </div>
+ 
+           </div>
+         </div>,
+         document.body
+       )}
+ 
+     </div>
   );
 }
