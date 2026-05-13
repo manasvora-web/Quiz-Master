@@ -294,7 +294,7 @@ export default function CreateQuiz() {
             <div className="confirm-details">
               <div className="confirm-item">
                 <label>Title</label>
-                <div>{pendingData.title}</div>
+                <div className="confirm-title-text">{pendingData.title}</div>
               </div>
               
               {pendingData.description && (
