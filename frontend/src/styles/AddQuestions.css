@@ -23,7 +23,7 @@
 
   width: 100%;
 
-  background: linear-gradient(90deg, 00#ffe88a, #fde68a);
+  background: linear-gradient(90deg, #ffe88a, #fde68a);
   border: 1px solid #facc15;
 
   padding: 14px 20px;
@@ -40,6 +40,15 @@
   color: #92400e;
 
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.quiz-title-text {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 16px;
 }
 
 

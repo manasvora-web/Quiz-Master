@@ -471,7 +471,7 @@ export default function AddQuestions() {
       {/* QUIZ BAR */}
       <div className="quiz-info-bar">
 
-        <div>
+        <div className="quiz-title-text" title={quizTitle || "Loading..."}>
           <b>Quiz:</b> {quizTitle || "Loading..."}
         </div>
 

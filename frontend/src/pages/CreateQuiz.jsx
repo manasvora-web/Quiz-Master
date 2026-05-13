@@ -57,6 +57,15 @@ export default function CreateQuiz() {
       if (value.includes("-") || Number(value) < 0) return;
     }
 
+    /* TITLE — max 10 words */
+    if (name === "title") {
+      const wordCount = value.trim() ? value.trim().split(/\s+/).length : 0;
+      if (wordCount > 10) {
+        showAlert("Title cannot exceed 10 words", "warning", 2000);
+        return;
+      }
+    }
+
     /* DESCRIPTION — no limit */
     if (name === "description") {
       // no return here
@@ -204,6 +213,7 @@ export default function CreateQuiz() {
               onChange={handleChange}
               className={errors.title ? "input-error" : ""}
             />
+            <small>Max 10 words allowed</small>
           </div>
 
           {/* DESCRIPTION */}
