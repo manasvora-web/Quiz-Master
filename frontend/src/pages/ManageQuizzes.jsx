@@ -147,13 +147,13 @@ export default function ManageQuizzes() {
       )}
 
       {/* ================= DELETE CONFIRMATION ================= */}
-       {showDeleteConfirm && createPortal(
+      {showDeleteConfirm && createPortal(
          <div className="confirm-overlay">
            <div className="confirm-box">
              
              <h3 style={{ color: "#ef4444" }}>Delete Quiz?</h3>
              
-             <p className="text-center" style={{ color: "#64748b", margin: "10px 0 20px" }}>
+             <p className="text-center" style={{ color: "#64748b", margin: "10px 0 20px", wordBreak: "break-word" }}>
                Are you sure you want to delete <b>{quizToDelete?.title}</b>?<br/>
                This action cannot be undone and will remove all questions and results.
              </p>

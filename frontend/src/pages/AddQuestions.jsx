@@ -241,14 +241,11 @@ export default function AddQuestions() {
 
     setIsTrueFalse(true);
 
-    setForm({
-      question_text: "",
+    setForm(prev => ({
+      ...prev,
       options: ["True", "False"],
-      correct_option: 1,
-      marks: 1,
-      negative_on: false,
-      negative_marks: "0"
-    });
+      correct_option: 1
+    }));
 
     setErrors({});
   };
@@ -260,7 +257,14 @@ export default function AddQuestions() {
   const enableMCQ = () => {
 
     setIsTrueFalse(false);
-    resetForm();
+    
+    setForm(prev => ({
+      ...prev,
+      options: ["", ""],
+      correct_option: 1
+    }));
+
+    setErrors({});
   };
 
 
@@ -301,33 +305,24 @@ export default function AddQuestions() {
 
 
 
-  /* ================= SUBMIT ================= */
+  /* ================= SUBMIT / SAVE QUESTION ================= */
 
-  const handleSubmit = async (e) => {
-
-    e.preventDefault();
-
+  const saveQuestion = async () => {
 
     if (!validate()) {
-
       showAlert("Please fill all required fields", "warning");
-      return;
+      return false;
     }
-
-
 
     let negativeValue = 0;
 
     if (form.negative_on) {
-
       if (form.negative_marks === "same") {
         negativeValue = Number(form.marks);
       } else {
         negativeValue = parseFloat(form.negative_marks) || 0;
       }
     }
-
-
 
     /* ================= BUILD FORM DATA (supports image) ================= */
 
@@ -348,34 +343,43 @@ export default function AddQuestions() {
       formData.append("question_image", imageFile);
     }
 
-
-
     try {
-
       if (editId) {
-
         await api.put(`/question/${editId}`, formData, {
           headers: { "Content-Type": "multipart/form-data" }
         });
         showAlert("Question updated", "success");
-
       } else {
-
         await api.post("/question/add", formData, {
           headers: { "Content-Type": "multipart/form-data" }
         });
         showAlert("Question added", "success");
       }
 
-
       fetchQuestions();
       resetForm();
-
+      return true;
 
     } catch {
-
       showAlert("Server error", "error");
+      return false;
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await saveQuestion();
+  };
+
+  const handleCompleteQuiz = async () => {
+    if (form.question_text.trim()) {
+      const confirmSave = window.confirm("You have an unsaved question. Do you want to save it before submitting the quiz?");
+      if (confirmSave) {
+        const success = await saveQuestion();
+        if (!success) return; // Stop if validation failed
+      }
+    }
+    navigate("/organizer/dashboard");
   };
 
 
@@ -519,7 +523,7 @@ export default function AddQuestions() {
             className={isTrueFalse ? "active" : ""}
             onClick={enableTrueFalse}
           >
-            True / False
+            True/False
           </button>
 
         </div>
@@ -676,59 +680,59 @@ export default function AddQuestions() {
 
 
           {/* NEGATIVE */}
-          <div className="neg-box">
+          <div className="neg-container">
+            <div className="neg-box">
 
-            <label>
+              <label>
 
-              <input
-                type="checkbox"
-                checked={form.negative_on}
-                onChange={(e) =>
-                  setForm(prev => ({
-                    ...prev,
-                    negative_on: e.target.checked
-                  }))
-                }
-              />
+                <input
+                  type="checkbox"
+                  checked={form.negative_on}
+                  onChange={(e) =>
+                    setForm(prev => ({
+                      ...prev,
+                      negative_on: e.target.checked
+                    }))
+                  }
+                />
 
-              Enable Negative Marking
+                Enable Negative Marking
 
-            </label>
-
-          </div>
-
-
-
-          {/* NEGATIVE MARKS */}
-          {form.negative_on && (
-
-            <div className="negative-marks-box">
-
-              <label>Negative Marks</label>
-
-              <select
-                value={form.negative_marks}
-                onChange={(e) =>
-                  setForm(prev => ({
-                    ...prev,
-                    negative_marks: e.target.value
-                  }))
-                }
-              >
-
-                <option value="0">0</option>
-                <option value="0.25">0.25</option>
-                <option value="0.5">0.5</option>
-                <option value="1">1</option>
-
-                <option value="same">
-                  = Same as Marks
-                </option>
-
-              </select>
+              </label>
 
             </div>
-          )}
+
+            {/* NEGATIVE MARKS */}
+            {form.negative_on && (
+
+              <div className="negative-marks-box">
+
+                <label>Negative Marks</label>
+
+                <select
+                  value={form.negative_marks}
+                  onChange={(e) =>
+                    setForm(prev => ({
+                      ...prev,
+                      negative_marks: e.target.value
+                    }))
+                  }
+                >
+
+                  <option value="0">0</option>
+                  <option value="0.25">0.25</option>
+                  <option value="0.5">0.5</option>
+                  <option value="1">1</option>
+
+                  <option value="same">
+                    = Same as Marks
+                  </option>
+
+                </select>
+
+              </div>
+            )}
+          </div>
 
 
 
@@ -836,10 +840,10 @@ export default function AddQuestions() {
 
 
 
-        {questions.length > 0 && (
+        {(questions.length > 0 || form.question_text.trim()) && (
 
           <Button
-            onClick={() => navigate("/organizer/dashboard")}
+            onClick={handleCompleteQuiz}
             className="addq-submit"
           >
             <FaSave /> Submit Quiz

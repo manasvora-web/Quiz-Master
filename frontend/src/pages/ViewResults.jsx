@@ -20,14 +20,14 @@ const formatDate = (dt) => {
   });
 };
 
-const PIE_COLORS   = ["#22c55e", "#ef4444"];
+const PIE_COLORS = ["#22c55e", "#ef4444"];
 const GRAPH_COLORS = {
-  total_attempts:  "#6366f1",
-  pass_count:      "#22c55e",
-  fail_count:      "#ef4444",
+  total_attempts: "#6366f1",
+  pass_count: "#22c55e",
+  fail_count: "#ef4444",
   students_active: "#f59e0b"
 };
-const RESULTS_PER_PAGE  = 10;
+const RESULTS_PER_PAGE = 10;
 const STUDENTS_PER_PAGE = 10;
 
 export default function ViewResults() {
@@ -43,33 +43,33 @@ export default function ViewResults() {
   const [summary, setSummary] = useState(null);
 
   /* ===== RESULTS TABLE ===== */
-  const [results,      setResults]      = useState([]);
+  const [results, setResults] = useState([]);
   const [tableLoading, setTableLoading] = useState(false);
-  const [currentPage,  setCurrentPage]  = useState(
+  const [currentPage, setCurrentPage] = useState(
     () => parseInt(localStorage.getItem("results_current_page")) || 1
   );
-  const [totalPages,   setTotalPages]   = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
 
   /* ===== GRAPH 1 ===== */
-  const [quizGraph,    setQuizGraph]    = useState([]);
-  const [graphRange,   setGraphRange]   = useState("monthly");
+  const [quizGraph, setQuizGraph] = useState([]);
+  const [graphRange, setGraphRange] = useState("monthly");
   const [graphLoading, setGraphLoading] = useState(false);
 
   /* ===== GRAPH 2 — STUDENT (infinite scroll) ===== */
-  const [studentData,      setStudentData]      = useState([]);
-  const [studentPage,      setStudentPage]       = useState(1);
-  const [studentTotalPages,setStudentTotalPages] = useState(1);
-  const [studentTotal,     setStudentTotal]      = useState(0);
-  const [studentLoading,   setStudentLoading]    = useState(false);
-  const [studentLoadingMore,setStudentLoadingMore]= useState(false);
-  const [selectedStudent,  setSelectedStudent]   = useState(null);
-  const [studentSearch,    setStudentSearch]     = useState("");
-  const [searchInput,      setSearchInput]       = useState("");
+  const [studentData, setStudentData] = useState([]);
+  const [studentPage, setStudentPage] = useState(1);
+  const [studentTotalPages, setStudentTotalPages] = useState(1);
+  const [studentTotal, setStudentTotal] = useState(0);
+  const [studentLoading, setStudentLoading] = useState(false);
+  const [studentLoadingMore, setStudentLoadingMore] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [studentSearch, setStudentSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   /* scroll sentinel ref */
   const sentinelRef = useRef(null);
-  const listRef     = useRef(null);
+  const listRef = useRef(null);
 
 
   /* ================================================
@@ -93,11 +93,11 @@ export default function ViewResults() {
     console.log(`[PAGINATION] Loading page ${page} — fetching ${RESULTS_PER_PAGE} rows from API`);
     setTableLoading(true);
     try {
-      const res  = await api.get(`/attempt/results?page=${page}&limit=${RESULTS_PER_PAGE}`);
+      const res = await api.get(`/attempt/results?page=${page}&limit=${RESULTS_PER_PAGE}`);
       const data = res.data || {};
       setResults(data.results || []);
       console.log(`[PAGINATION] Page ${page} loaded — got ${(data.results || []).length} rows, total ${data.pagination?.totalResults} results, ${data.pagination?.totalPages} pages`);
-      setTotalPages(Number(data.pagination?.totalPages)   || 1);
+      setTotalPages(Number(data.pagination?.totalPages) || 1);
       setTotalResults(Number(data.pagination?.totalResults) || 0);
       if (page > (Number(data.pagination?.totalPages) || 1)) setCurrentPage(1);
     } catch (err) {
@@ -156,7 +156,7 @@ export default function ViewResults() {
       );
       const students = res.data.students || [];
       setStudentData(students);
-      setStudentTotalPages(res.data.pagination?.totalPages   || 1);
+      setStudentTotalPages(res.data.pagination?.totalPages || 1);
       setStudentTotal(res.data.pagination?.totalStudents || 0);
       setStudentPage(1);
       // Auto-select first student by default
@@ -172,9 +172,9 @@ export default function ViewResults() {
     }
   }, [showAlert]);
 
-  useEffect(() => {
-    if (activeTab === "students") loadStudentsFirst(studentSearch);
-  }, [activeTab]); // eslint-disable-line
+    useEffect(() => {
+      if (activeTab === "students") loadStudentsFirst(studentSearch);
+    }, [activeTab]); // eslint-disable-line
 
 
   /* ================================================
@@ -281,9 +281,9 @@ export default function ViewResults() {
 
   const pieData = summary
     ? [
-        { name: "Pass", value: summary.totalPass || 0 },
-        { name: "Fail", value: summary.totalFail || 0 }
-      ]
+      { name: "Pass", value: summary.totalPass || 0 },
+      { name: "Fail", value: summary.totalFail || 0 }
+    ]
     : [];
 
 
@@ -394,9 +394,9 @@ export default function ViewResults() {
                       <XAxis dataKey="label" tick={{ fontSize: 12 }} />
                       <YAxis allowDecimals={false} />
                       <Tooltip /><Legend />
-                      <Bar dataKey="total_attempts" name="Total Attempts" fill={GRAPH_COLORS.total_attempts} radius={[4,4,0,0]} />
-                      <Bar dataKey="pass_count"     name="Pass"           fill={GRAPH_COLORS.pass_count}     radius={[4,4,0,0]} />
-                      <Bar dataKey="fail_count"     name="Fail"           fill={GRAPH_COLORS.fail_count}     radius={[4,4,0,0]} />
+                      <Bar dataKey="total_attempts" name="Total Attempts" fill={GRAPH_COLORS.total_attempts} radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="pass_count" name="Pass" fill={GRAPH_COLORS.pass_count} radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="fail_count" name="Fail" fill={GRAPH_COLORS.fail_count} radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -410,7 +410,7 @@ export default function ViewResults() {
                       <YAxis allowDecimals={false} />
                       <Tooltip /><Legend />
                       <Line type="monotone" dataKey="students_active" name="Students Active" stroke={GRAPH_COLORS.students_active} strokeWidth={2} dot={{ r: 4 }} />
-                      <Line type="monotone" dataKey="quizzes_active"  name="Quizzes Active"  stroke={GRAPH_COLORS.total_attempts}  strokeWidth={2} dot={{ r: 4 }} />
+                      <Line type="monotone" dataKey="quizzes_active" name="Quizzes Active" stroke={GRAPH_COLORS.total_attempts} strokeWidth={2} dot={{ r: 4 }} />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
@@ -536,8 +536,8 @@ export default function ViewResults() {
                             <XAxis dataKey="name" tick={{ fontSize: 11 }} />
                             <YAxis allowDecimals={false} />
                             <Tooltip /><Legend />
-                            <Bar dataKey="Score"      fill="#6366f1" radius={[4,4,0,0]} />
-                            <Bar dataKey="Percentage" fill="#f59e0b" radius={[4,4,0,0]} />
+                            <Bar dataKey="Score" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="Percentage" fill="#f59e0b" radius={[4, 4, 0, 0]} />
                           </BarChart>
                         </ResponsiveContainer>
                       </div>
@@ -609,7 +609,7 @@ export default function ViewResults() {
                     <tbody>
                       {results.map((r, i) => {
                         const percent = Number(r.percentage) || 0;
-                        const rowNum  = (currentPage - 1) * RESULTS_PER_PAGE + i + 1;
+                        const rowNum = (currentPage - 1) * RESULTS_PER_PAGE + i + 1;
                         return (
                           <tr key={i}>
                             <td style={{ color: "#9ca3af", fontSize: "12px" }}>{rowNum}</td>
@@ -629,7 +629,7 @@ export default function ViewResults() {
                             </td>
                           </tr>
                         );
-                        
+
                       })}
                     </tbody>
                   </table>

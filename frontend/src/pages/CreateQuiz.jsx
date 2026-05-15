@@ -52,23 +52,31 @@ export default function CreateQuiz() {
       value = value.toUpperCase().replace(/\s/g, "");
     }
 
-    /* TIME LIMIT — no negative */
+    /* TIME LIMIT — no negative, max 180 */
     if (name === "time_limit") {
       if (value.includes("-") || Number(value) < 0) return;
-    }
-
-    /* TITLE — max 10 words */
-    if (name === "title") {
-      const wordCount = value.trim() ? value.trim().split(/\s+/).length : 0;
-      if (wordCount > 10) {
-        showAlert("Title cannot exceed 10 words", "warning", 2000);
+      if (Number(value) > 180) {
+        showAlert("Maximum time limit is 180 minutes", "warning", 2000);
         return;
       }
     }
 
-    /* DESCRIPTION — no limit */
+    /* TITLE — max 255 alphabets with space */
+    if (name === "title") {
+      if (!/^[a-zA-Z\s]*$/.test(value)) return;
+      if (value.length > 255) {
+        showAlert("Title cannot exceed 255 characters", "warning", 2000);
+        return;
+      }
+    }
+
+    /* DESCRIPTION — max 2500 alphabets with space */
     if (name === "description") {
-      // no return here
+      if (!/^[a-zA-Z\s]*$/.test(value)) return;
+      if (value.length > 2500) {
+        showAlert("Description cannot exceed 2500 characters", "warning", 2000);
+        return;
+      }
     }
 
     setForm(prev => ({
@@ -100,13 +108,13 @@ export default function CreateQuiz() {
       ok = false;
     }
 
-    /* TIME — must be >= 2 */
+    /* TIME — must be >= 2 and <= 180 */
     const time = Number(form.time_limit);
 
-    if (!form.time_limit || time < 2) {
+    if (!form.time_limit || time < 2 || time > 180) {
       temp.time_limit = true;
       ok = false;
-      showAlert("Time must be at least 2 minutes", "warning", 2000);
+      showAlert("Time must be between 2 and 180 minutes", "warning", 2000);
     }
 
     /* CUSTOM CODE (4–10 chars, A-Z 0-9 only) */
@@ -213,7 +221,7 @@ export default function CreateQuiz() {
               onChange={handleChange}
               className={errors.title ? "input-error" : ""}
             />
-            <small>Max 10 words allowed</small>
+            <small>Max 255 alphabetic characters allowed</small>
           </div>
 
           {/* DESCRIPTION */}
@@ -224,7 +232,9 @@ export default function CreateQuiz() {
               placeholder="Short description..."
               value={form.description}
               onChange={handleChange}
+              className={errors.description ? "input-error" : ""}
             />
+            <small>Max 2500 alphabetic characters allowed</small>
           </div>
 
           {/* TIME */}
@@ -234,12 +244,13 @@ export default function CreateQuiz() {
               type="number"
               name="time_limit"
               placeholder="e.g. 30"
-              min="0"
+              min="2"
+              max="180"
               value={form.time_limit}
               onChange={handleChange}
               className={errors.time_limit ? "input-error" : ""}
             />
-            <small>Minimum 2 minutes required</small>
+            <small>Minimum 2 and maximum 180 minutes required</small>
           </div>
 
           {/* CUSTOM CODE — auto filled + regenerate button */}
@@ -317,7 +328,11 @@ export default function CreateQuiz() {
               <div className="confirm-grid">
                 <div className="confirm-item">
                   <label>Time Limit</label>
-                  <div>{pendingData.time_limit} minutes</div>
+                  <div>
+                    {String(Math.floor(pendingData.time_limit / 60)).padStart(2, "0")}:
+                    {String(pendingData.time_limit % 60).padStart(2, "0")}:
+                    00
+                  </div>
                 </div>
                 <div className="confirm-item">
                   <label>Quiz Code</label>
