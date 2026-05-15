@@ -19,6 +19,7 @@ import ManageQuizzes from "./pages/ManageQuizzes";
 import ViewResults from "./pages/ViewResults";
 import ProfileSettings from "./pages/ProfileSettings";
 import ThankYou from "./pages/ThankYou";
+import DashboardLayout from "./components/DashboardLayout";
 
 /* STYLES */
 import "./styles/theme.css";
@@ -53,67 +54,22 @@ export default function App() {
 
             {/* ================= ORGANIZER ROUTES ================= */}
 
-            <Route
-              path="/organizer/login"
-              element={<OrganizerLogin />}
-            />
-
+            <Route path="/organizer/login" element={<OrganizerLogin />} />
 
             <Route
-              path="/organizer/dashboard"
+              path="/organizer/*"
               element={
                 <ProtectedRoute>
-                  <OrganizerDashboard />
-                </ProtectedRoute>
-              }
-            />
-
-
-            <Route
-              path="/organizer/create"
-              element={
-                <ProtectedRoute>
-                  <CreateQuiz />
-                </ProtectedRoute>
-              }
-            />
-
-
-            <Route
-              path="/organizer/add-questions/:quizId"
-              element={
-                <ProtectedRoute>
-                  <AddQuestions />
-                </ProtectedRoute>
-              }
-            />
-
-
-            <Route
-              path="/organizer/quizzes"
-              element={
-                <ProtectedRoute>
-                  <ManageQuizzes />
-                </ProtectedRoute>
-              }
-            />
-
-
-            <Route
-              path="/organizer/results"
-              element={
-                <ProtectedRoute>
-                  <ViewResults />
-                </ProtectedRoute>
-              }
-            />
-
-
-            <Route
-              path="/organizer/profile"
-              element={
-                <ProtectedRoute>
-                  <ProfileSettings />
+                  <DashboardLayout>
+                    <Routes>
+                      <Route path="dashboard" element={<OrganizerDashboard />} />
+                      <Route path="create" element={<CreateQuiz />} />
+                      <Route path="add-questions/:quizId" element={<AddQuestions />} />
+                      <Route path="quizzes" element={<ManageQuizzes />} />
+                      <Route path="results" element={<ViewResults />} />
+                      <Route path="profile" element={<ProfileSettings />} />
+                    </Routes>
+                  </DashboardLayout>
                 </ProtectedRoute>
               }
             />

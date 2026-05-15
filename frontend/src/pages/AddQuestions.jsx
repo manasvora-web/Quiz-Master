@@ -13,7 +13,8 @@ import {
   FaList,
   FaPlus,
   FaSave,
-  FaImage
+  FaImage,
+  FaExclamationTriangle
 } from "react-icons/fa";
 
 import "../styles/AddQuestions.css";
@@ -679,59 +680,60 @@ export default function AddQuestions() {
 
 
 
-          {/* NEGATIVE */}
-          <div className="neg-container">
-            <div className="neg-box">
-
-              <label>
-
-                <input
-                  type="checkbox"
-                  checked={form.negative_on}
-                  onChange={(e) =>
-                    setForm(prev => ({
-                      ...prev,
-                      negative_on: e.target.checked
-                    }))
-                  }
-                />
-
-                Enable Negative Marking
-
-              </label>
-
+          {/* ================= EVALUATION SECTION ================= */}
+          <div className="evaluation-section">
+            <div className="section-header">
+              <FaExclamationTriangle className="warn-icon" />
+              <span>Scoring Rules</span>
             </div>
 
-            {/* NEGATIVE MARKS */}
-            {form.negative_on && (
-
-              <div className="negative-marks-box">
-
-                <label>Negative Marks</label>
-
-                <select
-                  value={form.negative_marks}
-                  onChange={(e) =>
-                    setForm(prev => ({
-                      ...prev,
-                      negative_marks: e.target.value
-                    }))
-                  }
-                >
-
-                  <option value="0">0</option>
-                  <option value="0.25">0.25</option>
-                  <option value="0.5">0.5</option>
-                  <option value="1">1</option>
-
-                  <option value="same">
-                    = Same as Marks
-                  </option>
-
-                </select>
-
+            <div className={`neg-config-box ${form.negative_on ? 'active' : ''}`}>
+              <div className="neg-toggle-row">
+                <div className="neg-text">
+                  <strong>Negative Marking</strong>
+                  <p>Deduct marks for incorrect answers</p>
+                </div>
+                <label className="pro-switch">
+                  <input
+                    type="checkbox"
+                    checked={form.negative_on}
+                    onChange={(e) =>
+                      setForm(prev => ({
+                        ...prev,
+                        negative_on: e.target.checked
+                      }))
+                    }
+                  />
+                  <span className="pro-slider"></span>
+                </label>
               </div>
-            )}
+
+              {form.negative_on && (
+                <div className="neg-penalty-selection">
+                  <div className="penalty-input">
+                    <label>Penalty Amount</label>
+                    <select
+                      value={form.negative_marks}
+                      onChange={(e) =>
+                        setForm(prev => ({
+                          ...prev,
+                          negative_marks: e.target.value
+                        }))
+                      }
+                    >
+                      <option value="0">0 (No Penalty)</option>
+                      <option value="0.25">0.25 Marks</option>
+                      <option value="0.5">0.5 Marks</option>
+                      <option value="1">1.0 Mark</option>
+                      <option value="same">= Full Marks (100% Penalty)</option>
+                    </select>
+                  </div>
+                  <div className="penalty-info">
+                    Students will lose <b>{form.negative_marks === 'same' ? form.marks : form.negative_marks}</b> marks if they select a wrong option.
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
 

@@ -12,14 +12,14 @@ const {
 
 
 /* ===============================
-   STUDENT (LOGIN REQUIRED)
+   STUDENT (PUBLIC)
 ================================ */
 
-// ✅ Submit quiz (protected)
-router.post("/submit", auth, submitAttempt);
+// ✅ Submit quiz
+router.post("/submit", submitAttempt);
 
-// ✅ Force end (protected)
-router.post("/force-end", auth, forceEndAttempt);
+// ✅ Force end
+router.post("/force-end", forceEndAttempt);
 
 
 

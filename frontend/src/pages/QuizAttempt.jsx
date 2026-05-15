@@ -302,34 +302,19 @@ export default function QuizAttempt() {
   useEffect(() => {
 
     const handleAutoSubmit = async () => {
-
       if (submittedRef.current) return;
+      showAlert("Cheating detected! Exam ended.", "error", 2000);
 
-      submittedRef.current = true;
 
 
-      showAlert(
-        "Cheating detected! Exam ended.",
-        "error",
-        1500
-      );
-
+      const payload = Object.entries(answers).map(([qid, selected]) => ({
+        question_id: Number(qid),
+        selected_option: Number(selected)
+      }));
 
       setTimeout(() => {
-
-        navigate("/result", {
-          replace: true,
-          state: {
-            score: 0,
-            total: questions.length,
-            percentage: 0,
-            grade: "F",
-            status: "Fail",
-            disqualified: true
-          }
-        });
-
-      }, 800);
+        doSubmit(payload, true);
+      }, 1000);
     };
 
 
@@ -347,7 +332,7 @@ export default function QuizAttempt() {
       );
     };
 
-  }, [navigate, questions.length, showAlert]);
+  }, [answers, doSubmit, showAlert]);
 
 
 

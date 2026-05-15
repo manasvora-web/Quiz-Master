@@ -321,6 +321,7 @@ const getMyQuizzes = async (req, res) => {
         id,
         title,
         quiz_code,
+        time_limit,
         show_result
       FROM quizzes
       WHERE organizer_id = ?
@@ -353,6 +354,19 @@ const deleteQuiz = async (req, res) => {
 
     const organizerId = req.user.id;
 
+    /* 1. DELETE ASSOCIATED ATTEMPTS */
+    await pool.query(
+      "DELETE FROM quiz_attempts WHERE quiz_id = ?",
+      [id]
+    );
+
+    /* 2. DELETE ASSOCIATED QUESTIONS */
+    await pool.query(
+      "DELETE FROM questions WHERE quiz_id = ?",
+      [id]
+    );
+
+    /* 3. DELETE THE QUIZ */
     const [result] = await pool.query(
       "DELETE FROM quizzes WHERE id=? AND organizer_id=?",
       [id, organizerId]
