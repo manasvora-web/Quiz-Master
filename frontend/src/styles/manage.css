@@ -106,14 +106,29 @@
   border-radius: 20px;
   border: 1px solid #e2e8f0;
   overflow: hidden;
+  overflow-x: auto;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .manage-table {
   width: 100%;
+  min-width: 800px;
   border-collapse: collapse;
   text-align: left;
+  table-layout: fixed;
 }
+
+.th-title, .td-title {
+  width: 40%;
+}
+
+.th-actions, .td-actions {
+  width: 25%;
+}
+
+.manage-table th:nth-child(2), .manage-table td:nth-child(2) { width: 12%; }
+.manage-table th:nth-child(3), .manage-table td:nth-child(3) { width: 13%; }
+.manage-table th:nth-child(4), .manage-table td:nth-child(4) { width: 10%; }
 
 .manage-table thead {
   background: #f8fafc;
@@ -150,6 +165,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  width: 100%;
 }
 
 .status-dot {
@@ -157,6 +174,7 @@
   height: 8px;
   border-radius: 50%;
   background: #cbd5e1;
+  flex-shrink: 0;
 }
 
 .status-dot.active {
@@ -164,11 +182,16 @@
   box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
 }
 
+.title-info {
+  min-width: 0;
+  flex: 1;
+}
+
 .q-name {
   font-weight: 700;
   color: #0f172a;
   display: block;
-  max-width: 300px;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -293,6 +316,8 @@
   margin: 16px 0 32px;
   line-height: 1.6;
   text-align: center;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .btn-cancel, .btn-confirm-delete {

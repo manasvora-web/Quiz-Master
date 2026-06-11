@@ -81,9 +81,6 @@ export default function OrganizerDashboard() {
           <h1>Dashboard Overview</h1>
           <p>Welcome back! Here's what's happening with your quizzes.</p>
         </div>
-        <button className="create-quick-btn" onClick={() => navigate("/organizer/create")}>
-          <FaPlusCircle /> New Quiz
-        </button>
       </header>
 
       {/* STATS GRID */}
