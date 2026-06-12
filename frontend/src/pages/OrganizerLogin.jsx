@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import api from "../api/axios";
 import { useAuth } from "../auth/AuthContext";
@@ -32,6 +33,7 @@ export default function OrganizerLogin() {
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   /* ================= CONFIRMATION POPUP ================= */
   const [showConfirm, setShowConfirm] = useState(false);
@@ -165,15 +167,25 @@ export default function OrganizerLogin() {
           {/* PASSWORD */}
           <div className="login-field">
             <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter password"
-              value={form.password}
-              onChange={handleChange}
-              autoComplete="current-password"
-              className={errors.password ? "input-error" : ""}
-            />
+            <div className="password-input-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter password"
+                value={form.password}
+                onChange={handleChange}
+                autoComplete="current-password"
+                className={errors.password ? "input-error" : ""}
+              />
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(prev => !prev)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
 
           {/* BUTTON */}
